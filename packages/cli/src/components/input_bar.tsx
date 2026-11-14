@@ -19,6 +19,8 @@ export function InputBar({onSubmit, disabled, maxWidth}: Props){
                 width="100%"
                 maxWidth={maxWidth}
                 gap={1}
+                border={["left"]}
+                borderColor="cyan"
             >
                 <textarea
                     width="100%"

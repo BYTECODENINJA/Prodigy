@@ -33,7 +33,7 @@ function App() {
           alignItems="center"
           justifyContent="center"
         >
-          <InputBar onSubmit={() => {}} />
+          <InputBar onSubmit={() => {}} maxWidth={78} />
         </box>
       </box>
     </box>
