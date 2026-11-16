@@ -1,6 +1,8 @@
 import {StatusBar} from "./status_bar.tsx";
-import type {KeyBinding} from "@opentui/core";
+import {type KeyBinding, TextareaRenderable} from "@opentui/core";
 import {CommandMenu} from "./command_menu";
+import {useEffect, useRef} from "react";
+import {useRenderer} from "@opentui/react";
 
 type Props = {
     onSubmit: (text: string) => void;
@@ -16,6 +18,19 @@ export const TEXT_AREA_KEY_BINDINGS: KeyBinding[] =[
 ]
 
 export function InputBar({onSubmit, disabled, maxWidth}: Props){
+    const textareaRef = useRef<TextareaRenderable>(null);
+    const onsubmitRef = useRef<() => void>(() => {});
+    const renderer = useRenderer();
+
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        textarea.onSubmit = () => {
+            onsubmitRef.current();
+        }
+    }, [textareaRef])
+
     return (
         <box width="100%" alignItems="center" justifyContent="center">
             <box
