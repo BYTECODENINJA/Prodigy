@@ -9,10 +9,10 @@ const COMMAND_COL_WIDTH = Math.max(...COMMANDS.map((command) => command.name.len
 
 type CommandMenuProps = {
     query: string;
-    selectedIndex: number;
-    scrollRef: RefObject<ScrollBoxRenderable | null>;
-    onSelect: (index: number) => void;
-    onExecute: (index: number) => void;
+    selectedIndex?: number;
+    scrollRef?: RefObject<ScrollBoxRenderable | null>;
+    onSelect?: (index: number) => void;
+    onExecute?: (index: number) => void;
 }
 
 export function CommandMenu({
@@ -33,30 +33,37 @@ export function CommandMenu({
                 </text>
             </box>
         )
+    }
 
-        return (
-            <scrollbox
-            ref={scrollRef} height={visibleHeight}>
-                {filtered.map((command, i) =>{
-                    const isSelected = i === selectedIndex;
-                    return (
-                        <box
-                            paddingX={1}
-                            key={command.value}
-                            overflow="hidden"
-                            flexDirection="row"
-                            height={1}
-                            backgroundColor={isSelected ? '#89b4fa' : undefined}
-                            onMouseMove={() => onSelect(i)}
-                            onMouseDown={() => onExecute(i)}
-                        >
-                            <text attributes={isSelected ? TextAttributes.BOLD : TextAttributes.DIM}>
-                                {command.name}
+    return (
+        <scrollbox
+        ref={scrollRef} height={visibleHeight}>
+            {filtered.map((command, i) =>{
+                const isSelected = i === selectedIndex;
+                return (
+                    <box
+                        paddingX={1}
+                        key={command.value}
+                        overflow="hidden"
+                        flexDirection="row"
+                        height={1}
+                        backgroundColor={isSelected ? '#89b4fa' : undefined}
+                        onMouseMove={() => onSelect?.(i)}
+                        onMouseDown={() => onExecute?.(i)}
+                    >
+                        <box width={COMMAND_COL_WIDTH} flexShrink={0}>
+                            <text selectable={false} fg={isSelected ? "black" : "white"}>
+                                /{command.name}
                             </text>
                         </box>
-                    )
-                })}
-            </scrollbox>
-        )
-    }
+                        <box flexGrow={1} flexShrink={1} overflow="hidden">
+                            <text selectable={false} fg={isSelected ? "black" : "gray"}>
+                                {command.description}
+                            </text>
+                        </box>
+                    </box>
+                )
+            })}
+        </scrollbox>
+    )
 }
