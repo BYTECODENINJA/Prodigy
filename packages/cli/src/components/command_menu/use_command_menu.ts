@@ -2,6 +2,7 @@ import {type RefObject, useMemo, useRef, useState} from "react";
 import type {ScrollBoxRenderable} from "@opentui/core";
 import {getFilteredCommands} from "./filter_commands.ts";
 import {useKeyboard} from "@opentui/react";
+import type {command} from "./types.ts";
 
 type UseCommandMenuReturn = {
     showCommandMenu: boolean;
@@ -9,7 +10,7 @@ type UseCommandMenuReturn = {
     selectedIndex: number;
     scrollRef: RefObject<ScrollBoxRenderable | null>;
     handleContentChange: (text: string) => void;
-    resolveCommand: (index: number) => void;
+    resolveCommand: (index: number) => command | undefined;
     setSelectedIndex: (index: number) => void;
 };
 
@@ -32,7 +33,7 @@ export function useCommandMenu(): UseCommandMenuReturn {
         }
 
         const prefix = text.startsWith("/") ? text.slice(1) : null;
-        if (prefix !== null && !prefix.includes("")){
+        if (prefix !== null && !prefix.includes(" ")){
             setShowCommandMenu(true);
         } else {
             setShowCommandMenu(false);
