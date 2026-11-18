@@ -3,9 +3,11 @@ import { createRoot } from "@opentui/react";
 import { DateTime } from "./components/date_time.tsx";
 import { Header } from "./components/header.tsx";
 import { InputBar } from "./components/input_bar.tsx";
+import {ToastProvider} from "./providers/toast";
 
 function App() {
   return (
+      <ToastProvider>
     <box
       flexDirection="column"
       justifyContent="space-between"
@@ -37,6 +39,7 @@ function App() {
         </box>
       </box>
     </box>
+      </ToastProvider>
   );
 }
 
