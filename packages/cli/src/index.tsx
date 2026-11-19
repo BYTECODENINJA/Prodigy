@@ -4,9 +4,11 @@ import { DateTime } from "./components/date_time.tsx";
 import { Header } from "./components/header.tsx";
 import { InputBar } from "./components/input_bar.tsx";
 import {ToastProvider} from "./providers/toast";
+import {KeyboardLayerProvider} from "./providers/keyboard_layer";
 
 function App() {
   return (
+      <KeyboardLayerProvider>
       <ToastProvider>
     <box
       flexDirection="column"
@@ -40,6 +42,7 @@ function App() {
       </box>
     </box>
       </ToastProvider>
+        </KeyboardLayerProvider>
   );
 }
 

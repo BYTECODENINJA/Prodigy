@@ -6,6 +6,7 @@ import {useRenderer} from "@opentui/react";
 import {useCommandMenu} from "./command_menu/use_command_menu.ts";
 import type {command} from "./command_menu/types.ts";
 import {useToast} from "../providers/toast";
+import {useKeyboardLayer} from "../providers/keyboard_layer";
 
 type Props = {
     onSubmit: (text: string) => void;
@@ -25,6 +26,8 @@ export function InputBar({onSubmit, disabled, maxWidth}: Props){
     const onsubmitRef = useRef<() => void>(() => {});
     const renderer = useRenderer();
     const toast = useToast();
+    const {isTopLayer, setResponder} = useKeyboardLayer();
+
     const {
         showCommandMenu,
         commandQuery,
@@ -97,6 +100,20 @@ export function InputBar({onSubmit, disabled, maxWidth}: Props){
 
         handleSubmit();
     }
+
+    useEffect(() => {
+        setResponder("base", () => {
+            if (disabled) return false;
+
+            const textarea = textareaRef.current;
+            if (textarea && textarea.plainText.length > 0){
+                textarea.setText("")
+                return true;
+            }
+            return false;
+        })
+        return () => setResponder("base", null);
+    }, []);
 
     return (
         <box width="100%" alignItems="center" justifyContent="center">

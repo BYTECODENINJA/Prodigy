@@ -1,6 +1,6 @@
-import {createContext, useCallback, useRef, useState} from "react";
+import {createContext, useCallback, useContext, useRef, useState} from "react";
 import * as React from "react";
-import {useRenderer} from "@opentui/react";
+import {useKeyboard, useRenderer} from "@opentui/react";
 
 type Responder = () => boolean;
 
@@ -57,4 +57,35 @@ export function KeyboardLayerProvider({children}: { children: React.ReactNode })
             responders.current.delete(id);
         }
     }, [])
+
+    useKeyboard((key ) => {
+        if (!key.ctrl || key.name !== "c") return;
+
+        const currentStack = stackRef.current;
+        for (let i = currentStack.length - 1; i >= 0; i--){
+            const layerId = currentStack[i]!;
+            const responder = responders.current.get(layerId);
+            if (responder && responder()) {
+                return;
+            }
+        }
+
+        renderer.destroy();
+    })
+
+    return (
+        <KeyboardLayerContext.Provider value={{ push, pop, isTopLayer, setResponder }}>
+            {children}
+        </KeyboardLayerContext.Provider>
+    )
+}
+
+export function useKeyboardLayer() {
+    const context = useContext(KeyboardLayerContext);
+
+    if (!context) {
+        throw new Error("useKeyboardLayer must be used within a KeyboardLayerProvider");
+    }
+
+    return context;
 }
