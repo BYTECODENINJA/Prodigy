@@ -152,7 +152,7 @@ export function InputBar({onSubmit, disabled, maxWidth}: Props){
                     width="100%"
                     keyBindings={TEXT_AREA_KEY_BINDINGS}
                     onContentChange={handleTextareaContentChange}
-                    focused={!disabled}
+                    focused={!disabled && (isTopLayer("base") || isTopLayer("command"))}
                     placeholder="Start a conversation.."
                 />
                 <StatusBar/>
