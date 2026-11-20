@@ -24,6 +24,10 @@ export function useCommandMenu(): UseCommandMenuReturn {
 
     const commandQuery = showCommandMenu && textValue.startsWith("/") ? textValue.slice(1): "";
     const filteredCommands = useMemo(() => getFilteredCommands(commandQuery), [commandQuery]);
+    const close = () => {
+        setShowCommandMenu(false);
+        pop("command");
+    }
 
     const handleContentChange = (text: string) => {
         setTextValue(text);
@@ -38,31 +42,27 @@ export function useCommandMenu(): UseCommandMenuReturn {
         if (prefix !== null && !prefix.includes(" ")){
             setShowCommandMenu(true);
             push("command", () => {
-                setShowCommandMenu(false);
-                pop("command");
+                close();
                 return true;
             });
         } else {
-            setShowCommandMenu(false);
-            pop("command");
+            close();
         }
     }
 
     const resolveCommand = (index: number) => {
         const command = filteredCommands[index];
         if (command) {
-            setShowCommandMenu(false);
-            pop("command");
+            close();
         }
         return command;
     }
 
     useKeyboard((key) => {
-        if (!showCommandMenu) return;
+        if (!showCommandMenu || !isTopLayer("command")) return;
 
         if(key.name === "escape") {
-            setShowCommandMenu(false);
-            pop("command");
+           close()
         } else if (key.name === "up") {
             key.preventDefault();
             setSelectedIndex((i: number) => {

@@ -14,7 +14,7 @@ export const COMMANDS: command[] = [
         description: "Login to your account",
         value: "/login",
         action: ctx => {
-            ctx.toast.show({message: "Openning browser to initiate a login..."})
+            ctx.toast.show({message: "Opening browser to initiate a login..."})
         }
     },
     {
@@ -22,7 +22,7 @@ export const COMMANDS: command[] = [
         description: "Sign out Current account",
         value: "/logout",
         action: ctx => {
-            ctx.toast.show({message: "Successfuly signed out...", variant: "success"})
+            ctx.toast.show({message: "Successfully signed out...", variant: "success"})
         }
     },
     {
@@ -43,10 +43,13 @@ export const COMMANDS: command[] = [
     },
     {
         name: "agents",
-        description: "View and Manage your agents",
+        description: "Switch Agents",
         value: "/agents",
         action: ctx => {
-            ctx.toast.show({message: "Switching to agents..."})
+            ctx.dialog.open({
+                title: "Select Mode",
+                children: <text>Agent Selection is comming soon...</text>
+            })
         }
     },
     {
@@ -54,7 +57,10 @@ export const COMMANDS: command[] = [
         description: "Select AI model",
         value: "/model",
         action: ctx => {
-            ctx.toast.show({message: "Selecting AI model..."})
+            ctx.dialog.open({
+                title: "Select Model",
+                children: <text>Model Selection is coming soon...</text>
+            })
         }
     },
     {
@@ -70,7 +76,7 @@ export const COMMANDS: command[] = [
      description: "View usage statistics",
      value: "/usage",
         action: ctx => {
-            ctx.toast.show({message: "Openning usage metrics..."})
+            ctx.toast.show({message: "Opening usage metrics..."})
         }
     },
     {

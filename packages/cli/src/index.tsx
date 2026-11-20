@@ -5,10 +5,12 @@ import { Header } from "./components/header.tsx";
 import { InputBar } from "./components/input_bar.tsx";
 import {ToastProvider} from "./providers/toast";
 import {KeyboardLayerProvider} from "./providers/keyboard_layer";
+import {DialogProvider} from "./providers/dialog";
 
 function App() {
   return (
       <KeyboardLayerProvider>
+        <DialogProvider>
       <ToastProvider>
     <box
       flexDirection="column"
@@ -42,6 +44,7 @@ function App() {
       </box>
     </box>
       </ToastProvider>
+        </DialogProvider>
         </KeyboardLayerProvider>
   );
 }
