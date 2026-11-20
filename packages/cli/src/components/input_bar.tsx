@@ -72,7 +72,7 @@ export function InputBar({onSubmit, disabled, maxWidth}: Props){
     }, [handleContentChange]);
 
     const handleSubmit = useCallback(() => {
-        if(!disabled) return;
+        if (disabled) return;
 
         const textarea = textareaRef.current;
         if(!textarea) return;
