@@ -3,6 +3,8 @@ import { createRoot } from "@opentui/react";
 import {createMemoryRouter, RouterProvider} from "react-router";
 import {RootLayout} from "./layouts/root_layout.tsx";
 import {Home} from "./screens/home.tsx";
+import {NewSession} from "./screens/new_session.tsx";
+import {Session} from "./screens/session.tsx";
 
 const router = createMemoryRouter([
   {
@@ -10,8 +12,8 @@ const router = createMemoryRouter([
     element: <RootLayout />,
     children: [
       {index: true, element: <Home />},
-      {path: "sessions/new", element: <box><text>Sessions/new</text></box>},
-      {path: "sessions/:id", element: <box><text>Sessions/:id</text></box>}
+      {path: "sessions/new", element: <NewSession />},
+      {path: "sessions/:id", element: <Session />}
     ]
   }
 ])
