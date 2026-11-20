@@ -1,4 +1,5 @@
 import type {command} from "./types.ts";
+import {ThemeDialogContent} from "../dialogs/theme_dialog.tsx";
 
 export const COMMANDS: command[] = [
     {
@@ -30,7 +31,10 @@ export const COMMANDS: command[] = [
         description: "Change theme",
         value: "/theme",
         action: ctx => {
-            ctx.toast.show({message: "Opening theme menu..."})
+           ctx.dialog.open({
+               title: "Select Theme",
+               children: <ThemeDialogContent/>
+           })
         }
     },
     {
